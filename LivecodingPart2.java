@@ -85,3 +85,8 @@ public class LivecodingPart2 {
         return (double) total / count;
     }
 }
+
+//What does each recursive call do to index, and why must it change?
+//Each call passes index + 1 so it moves to the next grade. If it didn't change, it would just keep checking the same spot over and over and never finish.
+//What happens if you delete the base case entirely?
+//Without the base case to stop it, it keeps going past the array and crashes with an error.
