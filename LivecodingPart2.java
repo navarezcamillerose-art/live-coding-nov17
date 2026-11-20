@@ -15,26 +15,50 @@ public class LivecodingPart2 {
      */
     public static void main(String[] args) {
     
-        int[] grades = {88, 79, 65};
-        int passingMark = 75;
+        Scanner input = new Scanner(System.in);
+
+        // 1. Ask how many grades will be entered
+        System.out.print("How many grades? ");
+        int n = input.nextInt();
+
+        // 2. Create the array and fill it with numbers you type
+        int[] grades = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter grade " + (i + 1) + ": ");
+            grades[i] = input.nextInt();
+        }
+
+        // 3. Ask for the passing mark
+        System.out.print("Enter passing mark: ");
+        int passingMark = input.nextInt();
 
         // Test the iterative method (Part A)
         int loopResult = countPassing(grades, passingMark);
-        System.out.println("Loop Result: " + loopResult); // Should print 2
+        System.out.println("Loop Result: " + loopResult);
 
         // Test the recursive method (Part B)
         int recursiveResult = countPassingRecursive(grades, passingMark, 0);
-        System.out.println("Recursive Result: " + recursiveResult); // Should print 2
+        System.out.println("Recursive Result: " + recursiveResult);
+
+        // Example call to computeAverage (using sum of all grades and count)
+        int total = 0;
+        for (int grade : grades) {
+            total += grade;
+        }
+
+        double average = computeAverage(total, grades.length);
+        System.out.println("Average: " + average);
+
+        input.close();
+       
+
     }
 
     // Part A: Iterative method with a loop
-    public static int countPassing(int[] grades, int passingMark) {
-        // Initialize a counter to keep track of passing grades
+    static int countPassing(int[] grades, int passingMark) {
         int count = 0;
 
-        // Loop through every element in the grades array
         for (int i = 0; i < grades.length; i++) {
-            // Check if the current grade meets or exceeds the passing mark
             if (grades[i] >= passingMark) {
                 count++;
             }
@@ -44,16 +68,20 @@ public class LivecodingPart2 {
     }
 
     // Part B: Recursive method (no loops, index starts at 0)
-    public static int countPassingRecursive(int[] grades, int passingMark, int index) {
-        // Stop when the index reaches the end of the array
+     static int countPassingRecursive(int[] grades, int passingMark, int index) {
         if (index == grades.length) {
             return 0;
         }
 
         int thisOne = (grades[index] >= passingMark) ? 1 : 0;
 
-        // Add current match and move to the next index
         return thisOne + countPassingRecursive(grades, passingMark, index + 1);
     }
 
+    static double computeAverage(int total, int count) {
+        if (count <= 0) {
+            return 0.0;
+        }
+        return (double) total / count;
+    }
 }
